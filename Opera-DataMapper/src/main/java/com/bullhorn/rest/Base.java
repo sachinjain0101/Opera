@@ -41,7 +41,6 @@ public class Base {
 	@RequestMapping(value = "/map",method = RequestMethod.GET, produces = "application/json")
 	public TargetMappings Get(@RequestParam(value="mapName") String mapName) {
 		return new TargetMappings(map.getMapDetail(mapName));
-		//return new Gson().toJson(map.getMapDetail(mapName));
 	}
 	
 	@ApiOperation(value = "Processes the source JSON and gives out the destination JSON.")
@@ -55,6 +54,28 @@ public class Base {
 }
 
 /*
-'[{"EmployeeFirstName":"Sachin WhatUp","EmployeeLastName":"Jain","EmployeeID":"1234","EmployeeSSN":"987654321","Codes":{"X1":"Y1","X2":"Y2"}}
-,{"EmployeeFirstName":"Shalina","EmployeeLastName":"Jain","EmployeeID":"","EmployeeSSN":"98989898","Codes":{"X1":"Y1"}}]'
- * */
+{
+	"client": "SOME",
+	"data": [{
+		"EmployeeFirstName": "Sachin WhatUp",
+		"EmployeeLastName": "Jain",
+		"EmployeeID": "1234",
+		"EmployeeSSN": "987654321",
+		"Codes": {
+			"X1": "Y1",
+			"X2": "Y2"
+		}
+	}, {
+		"EmployeeFirstName": "Shalina",
+		"EmployeeLastName": "Jain",
+		"EmployeeID": "",
+		"EmployeeSSN": "98989898",
+		"Codes": {
+			"X1": "Y1"
+		}
+	}],
+	"integrationKey": "12345",
+	"mapName": "Test",
+	"messageId": "67890"
+}
+*/
