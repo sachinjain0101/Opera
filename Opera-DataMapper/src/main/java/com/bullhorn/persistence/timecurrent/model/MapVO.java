@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description="Attribute and Expression mapping for a Map")
-public class MapKV {
+public class MapVO {
 
 	@ApiModelProperty(notes = "Destination JSON attribute name")
 	private String attribute;
@@ -27,13 +27,13 @@ public class MapKV {
 		this.expression = expression;
 	}
 
-	public MapKV(String attribute, String expression) {
+	public MapVO(String attribute, String expression) {
 		super();
 		this.attribute = attribute;
 		this.expression = expression;
 	}
 
-	public MapKV() {
+	public MapVO() {
 		super();
 	}
 

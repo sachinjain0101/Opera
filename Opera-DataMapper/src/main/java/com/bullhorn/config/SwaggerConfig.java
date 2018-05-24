@@ -25,7 +25,7 @@ public class SwaggerConfig {
 	private ApiInfo metaInfo() {
 
 		ApiInfo apiInfo = new ApiInfo("Opera Data Mapper API",
-				"Opera Data Mapper service takes care of Source to Target JSON mapping", "1.0", "Terms of service",
+				"Opera Data Mapper service takes care of Source to Target JSON mapping.", "1.0", "Terms of service",
 				new Contact("Sachin Jain", "https://www.bullhorn.com", "sachin.jain@bullhorn.com"),
 				"Apache License Version 2.0", "https://www.apache.org/licenses/LICENSE-2.0");
 		return apiInfo;

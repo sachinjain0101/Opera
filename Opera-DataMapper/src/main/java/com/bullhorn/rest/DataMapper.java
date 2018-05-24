@@ -1,8 +1,12 @@
 package com.bullhorn.rest;
 
+import javax.script.ScriptException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,23 +17,25 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bullhorn.json.model.SourceAssignments;
 import com.bullhorn.json.model.TargetAssignments;
 import com.bullhorn.json.model.TargetMappings;
-import com.bullhorn.persistence.timecurrent.dao.GetMap;
-import com.bullhorn.services.DataMapper;
+import com.bullhorn.persistence.timecurrent.dao.MapDAO;
+import com.bullhorn.services.Mapper;
+import com.google.gson.JsonSyntaxException;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@Api(value = "Base resource for accessing Opera-DataMapper.")
-public class Base {
+@Api(value = "Base resource for Opera-DataMapper")
+@RequestMapping("/maps")
+public class DataMapper {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(Base.class);
-	
-	@Autowired
-	DataMapper mapper;
+	private static final Logger LOGGER = LoggerFactory.getLogger(DataMapper.class);
 	
 	@Autowired
-	GetMap map;
+	Mapper mapper;
+	
+	@Autowired
+	MapDAO map;
 	
 	@ApiOperation(value="Test to see Data Mapper is working or not.")
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
@@ -38,7 +44,7 @@ public class Base {
 	}
 
 	@ApiOperation(value="Gets the map information.")
-	@RequestMapping(value = "/map",method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
 	public TargetMappings Get(@RequestParam(value="mapName") String mapName) {
 		return new TargetMappings(map.getMapDetail(mapName));
 	}
@@ -46,9 +52,14 @@ public class Base {
 	@ApiOperation(value = "Processes the source JSON and gives out the destination JSON.")
 	@RequestMapping(value = "/process",method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public TargetAssignments Process(@RequestBody SourceAssignments srcAsses) {
+	public ResponseEntity<TargetAssignments> Process(@RequestBody SourceAssignments srcAsses) {
 		LOGGER.info("{}",srcAsses.toString());
-		return mapper.ProcessMapping(srcAsses);
+		try {
+			return new ResponseEntity<>(mapper.ProcessMapping(srcAsses),HttpStatus.OK);
+		} catch (JsonSyntaxException | ScriptException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 }

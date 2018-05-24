@@ -12,6 +12,5 @@ public class OperaDataMapperApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(OperaDataMapperApplication.class, args);
 	}
-	
 
 }
