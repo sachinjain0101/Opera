@@ -18,9 +18,13 @@ public class OperaDockertestApplication {
 	public String hi() {
 		File f = new File("app.properties");
 		if (f.exists()) {
-			System.out.println("*************************"+f.getAbsolutePath());
+			System.out.println("*************************");
+			System.out.println("************************* "+f.getAbsolutePath());
+			System.out.println("*************************");
 		} else
-			System.out.println("*************************not found");
+			System.out.println("*************************");
+			System.out.println("************************* not found");
+			System.out.println("*************************");
 		return "";
 	}
 	
